@@ -17,20 +17,21 @@ export const CreateUserPro = ({ children }: { children: ReactNode }) => {
 
     let newID;
     do {
-      newID = setID(idGen(9999999999));
+      newID = idGen(9999999999);
     } while (existingIDs.includes(newID));
 
     return newID;
   };
 
   const postUser = async (username: string, password: string) => {
-    await generateUniqueID();
+    const newID = await generateUniqueID();
+    setID(newID);
     return fetch("http://localhost:3000/app-users", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ id, username, password, lastCount: 0 }),
+      body: JSON.stringify({ id: newID, username, password, lastCount: 0 }),
     })
       .then((res) => {
         if (!res.ok) {
