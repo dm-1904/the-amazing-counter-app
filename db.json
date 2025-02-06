@@ -1,0 +1,22 @@
+{
+  "app-users": [
+    {
+      "id": 3399969568,
+      "username": "Damon",
+      "password": "password",
+      "lastCount": 0
+    },
+    {
+      "id": 6122316691,
+      "username": "sdfgdfg",
+      "password": "sfdgfsdg",
+      "lastCount": 0
+    },
+    {
+      "id": 9413564480,
+      "username": "test1",
+      "password": "pass",
+      "lastCount": 0
+    }
+  ]
+}

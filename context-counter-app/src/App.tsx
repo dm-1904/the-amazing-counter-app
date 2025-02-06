@@ -2,7 +2,7 @@ import "./App.css";
 import { Box, NestedBox } from "./components/box";
 import { MinusButton, PlusButton, ResetButton } from "./components/button";
 import { Dashboard } from "./components/dashboard";
-import { Login } from "./components/login";
+import { Register } from "./components/register";
 
 function App() {
   return (
@@ -11,7 +11,7 @@ function App() {
       style={{ backgroundColor: "black", padding: "30px" }}
     >
       <h1>The Amazing Counter App!</h1>
-      <Login />
+      <Register />
       <Dashboard />
       <ResetButton />
       <PlusButton />

@@ -3,14 +3,14 @@ import { createRoot } from "react-dom/client";
 import "./index.css";
 import App from "./App.tsx";
 import { CountProvider } from "./context/CountProvider.tsx";
-import { AuthProvider } from "./context/CreateUserProvider.tsx";
+import { CreateUserPro } from "./context/CreateUserProvider.tsx";
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
-    <AuthProvider>
+    <CreateUserPro>
       <CountProvider>
         <App />
       </CountProvider>
-    </AuthProvider>
+    </CreateUserPro>
   </StrictMode>
 );

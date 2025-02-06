@@ -14,11 +14,9 @@ export const Box = ({ children }: { children: ReactNode }) => {
 
 export const NestedBox = () => {
   const context = useContext(CountContext);
-
   if (!context) {
     throw new Error("Count not available");
   }
-
   const { count } = context;
 
   return (

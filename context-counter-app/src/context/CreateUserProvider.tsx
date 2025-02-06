@@ -1,15 +1,60 @@
 import { ReactNode, useState } from "react";
-import { AuthContext } from "./CreateUserCon";
+import { CreateUser } from "./CreateUserCon";
 
-export const AuthProvider = ({ children }: { children: ReactNode }) => {
+export const CreateUserPro = ({ children }: { children: ReactNode }) => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [id, setID] = useState(0);
+
+  const idGen = (max: number) => {
+    return Math.floor(Math.random() * max);
+  };
+
+  const generateUniqueID = async () => {
+    const response = await fetch("http://localhost:3000/app-users");
+    const users = await response.json();
+    const existingIDs = users.map((user: { id: number }) => user.id);
+
+    let newID;
+    do {
+      newID = setID(idGen(9999999999));
+    } while (existingIDs.includes(newID));
+
+    return newID;
+  };
+
+  const postUser = async (username: string, password: string) => {
+    await generateUniqueID();
+    return fetch("http://localhost:3000/app-users", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ id, username, password, lastCount: 0 }),
+    })
+      .then((res) => {
+        if (!res.ok) {
+          throw new Error(`HTTP POST failed with status ${res.status}`);
+        }
+        return res.json();
+      })
+      .catch((error: Error) => {
+        throw new Error(`Posting to 'app-users' failed: ${error.message}`);
+      });
+  };
 
   return (
-    <AuthContext.Provider
-      value={{ username, password, setUsername, setPassword }}
+    <CreateUser.Provider
+      value={{
+        username,
+        password,
+        setUsername,
+        setPassword,
+        postUser,
+        id,
+      }}
     >
       {children}
-    </AuthContext.Provider>
+    </CreateUser.Provider>
   );
 };

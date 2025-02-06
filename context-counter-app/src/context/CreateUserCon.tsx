@@ -1,12 +1,12 @@
 import { createContext } from "react";
 
-export type AuthContextType = {
+export type TUserContext = {
   username: string;
   password: string;
+  id: number;
   setUsername: (username: string) => void;
   setPassword: (password: string) => void;
+  postUser: (user: string, password: string) => Promise<void>;
 };
 
-export const AuthContext = createContext<AuthContextType | undefined>(
-  undefined
-);
+export const CreateUser = createContext<TUserContext | undefined>(undefined);
