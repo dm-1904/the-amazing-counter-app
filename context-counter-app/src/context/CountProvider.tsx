@@ -3,7 +3,14 @@ import { CountContext } from "./CountContext";
 import { CreateUser } from "./CreateUserCon";
 
 export const CountProvider = ({ children }: { children: ReactNode }) => {
-  const [count, setCount] = useState(0);
+  const [count, setCount] = useState(() => {
+    const storedUser = localStorage.getItem("user");
+    if (storedUser) {
+      const { lastCount } = JSON.parse(storedUser);
+      return lastCount;
+    }
+    return 0;
+  });
 
   const user = useContext(CreateUser);
 
@@ -12,14 +19,20 @@ export const CountProvider = ({ children }: { children: ReactNode }) => {
   }
 
   useEffect(() => {
-    const storedCount = localStorage.getItem("count");
-    if (storedCount) {
-      setCount(Number(storedCount));
+    const storedUser = localStorage.getItem("user");
+    if (storedUser) {
+      const { lastCount } = JSON.parse(storedUser);
+      setCount(lastCount);
     }
   }, []);
 
   useEffect(() => {
-    localStorage.setItem("count", count.toString());
+    const storedUser = localStorage.getItem("user");
+    if (storedUser) {
+      const user = JSON.parse(storedUser);
+      user.lastCount = count;
+      localStorage.setItem("user", JSON.stringify(user));
+    }
   }, [count]);
 
   const updateLastCount = async (newCount: number) => {

@@ -30,13 +30,13 @@ export const Login = ({ isLoggedIn }: { isLoggedIn: boolean }) => {
     );
 
     if (user) {
-      toast.success("Login successful!");
       setUsername(user.username);
       setPassword(user.password);
       setID(user.id.toString());
       setCount(user.lastCount);
       localStorage.setItem("user", JSON.stringify(user));
       localStorage.setItem("count", user.lastCount.toString());
+      toast.success(`Welcome ${user.username}`);
     } else {
       toast.error("Invalid username or password");
     }
