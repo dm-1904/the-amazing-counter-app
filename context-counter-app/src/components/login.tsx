@@ -1,9 +1,11 @@
 import { useContext, useState } from "react";
 import { CreateUser } from "../context/CreateUserCon";
+import { CountContext } from "../context/CountContext";
 import { toast } from "react-toastify";
 
 export const Login = () => {
   const auth = useContext(CreateUser);
+  const countContext = useContext(CountContext);
   const [inputUsername, setInputUsername] = useState("");
   const [inputPassword, setInputPassword] = useState("");
 
@@ -11,7 +13,12 @@ export const Login = () => {
     throw new Error("Login auth error");
   }
 
+  if (!countContext) {
+    throw new Error("Count context error");
+  }
+
   const { setUsername, setPassword, setID } = auth;
+  const { setCount } = countContext;
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -27,6 +34,7 @@ export const Login = () => {
       setUsername(user.username);
       setPassword(user.password);
       setID(user.id);
+      setCount(user.lastCount);
     } else {
       toast.error("Invalid username or password");
     }

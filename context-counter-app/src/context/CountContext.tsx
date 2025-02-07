@@ -5,6 +5,7 @@ export type CountContextType = {
   handleIncrement: () => void;
   handleDecrement: () => void;
   handleReset: () => void;
+  setCount: (count: number) => void;
 };
 
 export const CountContext = createContext<CountContextType | undefined>(

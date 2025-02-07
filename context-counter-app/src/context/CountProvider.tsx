@@ -59,7 +59,7 @@ export const CountProvider = ({ children }: { children: ReactNode }) => {
 
   return (
     <CountContext.Provider
-      value={{ count, handleDecrement, handleIncrement, handleReset }}
+      value={{ count, handleDecrement, handleIncrement, handleReset, setCount }}
     >
       {children}
     </CountContext.Provider>
