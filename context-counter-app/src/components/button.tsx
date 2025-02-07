@@ -69,6 +69,7 @@ export const LogOutButton = () => {
   const { setCount } = countContext;
 
   const handleLogout = () => {
+    localStorage.removeItem("user");
     setUsername("");
     setPassword("");
     setID("0");

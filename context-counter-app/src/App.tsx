@@ -12,6 +12,8 @@ import { Register } from "./components/register";
 import { TakenUserNames } from "./components/takenUN";
 import { useState, useContext } from "react";
 import { CreateUser } from "./context/CreateUserCon";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 function App() {
   const [dependency, setDependency] = useState(0);
@@ -43,6 +45,7 @@ function App() {
           </Box>
         </Box>
       </Box>
+      <ToastContainer />
     </div>
   );
 }
