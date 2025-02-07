@@ -9,6 +9,7 @@ import {
 import { Dashboard } from "./components/dashboard";
 import { Login } from "./components/login";
 import { Register } from "./components/register";
+import { TakenUserNames } from "./components/takenUN";
 
 function App() {
   return (
@@ -18,10 +19,10 @@ function App() {
     >
       <h1>The Amazing Counter App!</h1>
       <Register />
+      <TakenUserNames />
       <Login />
       <LogOutButton />
       <Dashboard />
-
       <ResetButton />
       <PlusButton />
       <MinusButton />
