@@ -71,7 +71,7 @@ export const LogOutButton = () => {
   const handleLogout = () => {
     setUsername("");
     setPassword("");
-    setID(0);
+    setID("0");
     setCount(0); // Reset count state to 0
   };
 

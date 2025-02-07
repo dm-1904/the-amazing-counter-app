@@ -12,13 +12,18 @@ export const CountProvider = ({ children }: { children: ReactNode }) => {
   }
 
   useEffect(() => {
-    // ...existing code...
-  }, [user]);
+    const storedCount = localStorage.getItem("count");
+    if (storedCount) {
+      setCount(Number(storedCount));
+    }
+  }, []);
+
+  useEffect(() => {
+    localStorage.setItem("count", count.toString());
+  }, [count]);
 
   const updateLastCount = async (newCount: number) => {
     const url = `http://localhost:3000/app-users/${user.id}`;
-    // ...existing code...
-
     await fetch(url, {
       method: "PATCH",
       headers: {
@@ -35,7 +40,7 @@ export const CountProvider = ({ children }: { children: ReactNode }) => {
         return res.json();
       })
       .catch((err) => {
-        throw new Error(`Failed to PATCH item: ${err.message}`);
+        console.error(`Failed to PATCH item: ${err.message}`);
       });
   };
 

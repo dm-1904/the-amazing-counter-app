@@ -3,7 +3,7 @@ import { CreateUser } from "../context/CreateUserCon";
 import { CountContext } from "../context/CountContext";
 import { toast } from "react-toastify";
 
-export const Login = () => {
+export const Login = ({ isLoggedIn }: { isLoggedIn: boolean }) => {
   const auth = useContext(CreateUser);
   const countContext = useContext(CountContext);
   const [inputUsername, setInputUsername] = useState("");
@@ -33,8 +33,10 @@ export const Login = () => {
       toast.success("Login successful!");
       setUsername(user.username);
       setPassword(user.password);
-      setID(user.id);
+      setID(user.id.toString());
       setCount(user.lastCount);
+      localStorage.setItem("user", JSON.stringify(user));
+      localStorage.setItem("count", user.lastCount.toString());
     } else {
       toast.error("Invalid username or password");
     }
@@ -57,6 +59,7 @@ export const Login = () => {
           placeholder="Username"
           value={inputUsername}
           onChange={(e) => setInputUsername(e.target.value)}
+          disabled={isLoggedIn}
         />
         <input
           type="password"
@@ -64,8 +67,9 @@ export const Login = () => {
           placeholder="Password"
           value={inputPassword}
           onChange={(e) => setInputPassword(e.target.value)}
+          disabled={isLoggedIn}
         />
-        <button>Login</button>
+        <button disabled={isLoggedIn}>Login</button>
       </form>
     </div>
   );

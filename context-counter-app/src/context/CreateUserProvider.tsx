@@ -1,19 +1,29 @@
-import { ReactNode, useState } from "react";
+import { ReactNode, useEffect, useState } from "react";
 import { CreateUser } from "./CreateUserCon";
 
 export const CreateUserPro = ({ children }: { children: ReactNode }) => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const [id, setID] = useState(0);
+  const [id, setID] = useState("");
+
+  useEffect(() => {
+    const storedUser = localStorage.getItem("user");
+    if (storedUser) {
+      const { username, password, id } = JSON.parse(storedUser);
+      setUsername(username);
+      setPassword(password);
+      setID(id);
+    }
+  }, []);
 
   const idGen = (max: number) => {
-    return Math.floor(Math.random() * max);
+    return Math.floor(Math.random() * max).toString();
   };
 
   const generateUniqueID = async () => {
     const response = await fetch("http://localhost:3000/app-users");
     const users = await response.json();
-    const existingIDs = users.map((user: { id: number }) => user.id);
+    const existingIDs = users.map((user: { id: string }) => user.id);
 
     let newID;
     do {
@@ -26,12 +36,14 @@ export const CreateUserPro = ({ children }: { children: ReactNode }) => {
   const postUser = async (username: string, password: string) => {
     const newID = await generateUniqueID();
     setID(newID);
+    const user = { id: newID, username, password, lastCount: 0 };
+    localStorage.setItem("user", JSON.stringify(user));
     return fetch("http://localhost:3000/app-users", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ id: newID, username, password, lastCount: 0 }),
+      body: JSON.stringify(user),
     })
       .then((res) => {
         if (!res.ok) {

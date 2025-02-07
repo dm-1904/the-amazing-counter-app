@@ -1,7 +1,13 @@
 import { useContext, useState } from "react";
 import { CreateUser } from "../context/CreateUserCon";
 
-export const Register = () => {
+export const Register = ({
+  setDependency,
+  isLoggedIn,
+}: {
+  setDependency: (value: (prev: number) => number) => void;
+  isLoggedIn: boolean;
+}) => {
   const auth = useContext(CreateUser);
   const [inputUsername, setInputUsername] = useState("");
   const [inputPassword, setInputPassword] = useState("");
@@ -12,13 +18,14 @@ export const Register = () => {
 
   const { setUsername, setPassword, postUser } = auth;
 
-  const handleLogin = (e: React.FormEvent) => {
+  const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
     setUsername(inputUsername);
     setPassword(inputPassword);
-    postUser(inputUsername, inputPassword);
+    await postUser(inputUsername, inputPassword);
     setInputUsername("");
     setInputPassword("");
+    setDependency((prev) => prev + 1); // Trigger re-fetch of usernames
   };
 
   return (
@@ -35,6 +42,7 @@ export const Register = () => {
           placeholder="Username"
           value={inputUsername}
           onChange={(e) => setInputUsername(e.target.value)}
+          disabled={isLoggedIn}
         />
         <input
           type="password"
@@ -42,8 +50,9 @@ export const Register = () => {
           placeholder="Password"
           value={inputPassword}
           onChange={(e) => setInputPassword(e.target.value)}
+          disabled={isLoggedIn}
         />
-        <button>Register</button>
+        <button disabled={isLoggedIn}>Register</button>
       </form>
     </div>
   );
