@@ -12,33 +12,12 @@ export const CountProvider = ({ children }: { children: ReactNode }) => {
   }
 
   useEffect(() => {
-    console.log("User context:", user);
+    // ...existing code...
   }, [user]);
 
   const updateLastCount = async (newCount: number) => {
     const url = `http://localhost:3000/app-users/${user.id}`;
-    console.log(
-      "Updating lastCount for user:",
-      user.id,
-      "with count:",
-      newCount
-    );
-    console.log("PATCH request URL:", url);
-
-    // Fetch the specific user by ID and log the response
-    const fetchedUser = await fetch(url)
-      .then((res) => res.json())
-      .catch((err) => {
-        console.error("Failed to fetch user:", err.message);
-        return null;
-      });
-
-    console.log("Fetched user:", fetchedUser);
-
-    if (!fetchedUser) {
-      console.error(`User with ID ${user.id} does not exist.`);
-      return;
-    }
+    // ...existing code...
 
     await fetch(url, {
       method: "PATCH",
@@ -50,17 +29,13 @@ export const CountProvider = ({ children }: { children: ReactNode }) => {
       }),
     })
       .then((res) => {
-        console.log("PATCH response status:", res.status);
         if (!res.ok) {
           throw new Error(`Failed to PATCH item: ${res.status}`);
         }
         return res.json();
       })
-      .then((data) => {
-        console.log("PATCH response data:", data);
-      })
       .catch((err) => {
-        console.error(`Failed to PATCH item: ${err.message}`);
+        throw new Error(`Failed to PATCH item: ${err.message}`);
       });
   };
 

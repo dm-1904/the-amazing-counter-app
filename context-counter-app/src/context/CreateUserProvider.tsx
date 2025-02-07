@@ -51,6 +51,7 @@ export const CreateUserPro = ({ children }: { children: ReactNode }) => {
         password,
         setUsername,
         setPassword,
+        setID,
         postUser,
         id,
       }}

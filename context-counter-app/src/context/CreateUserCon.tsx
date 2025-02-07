@@ -6,6 +6,7 @@ export type TUserContext = {
   id: number;
   setUsername: (username: string) => void;
   setPassword: (password: string) => void;
+  setID: (id: number) => void;
   postUser: (user: string, password: string) => Promise<void>;
 };
 

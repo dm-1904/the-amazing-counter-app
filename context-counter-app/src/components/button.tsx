@@ -8,17 +8,6 @@ export const PlusButton = () => {
   }
   const { handleIncrement } = plusButton;
 
-  // const user = useContext(CreateUser);
-  // if (!user) {
-  //   throw new Error("Dashboard must be used with AuthProvider");
-  // }
-
-  // const context = useContext(CountContext);
-  // if (!context) {
-  //   throw new Error("Count not available");
-  // }
-  // const { count } = context;
-
   return (
     <button
       onClick={handleIncrement}

@@ -1,16 +1,16 @@
 {
   "app-users": [
     {
-      "id": 8063504512,
+      "id": "8063504512",
       "username": "Damon",
       "password": "pass",
-      "lastCount": 0
+      "lastCount": 4
     },
     {
-      "id": 5778060676,
+      "id": "5778060676",
       "username": "test",
       "password": "lajkfd",
-      "lastCount": 0
+      "lastCount": 2
     }
   ]
 }

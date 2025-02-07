@@ -1,7 +1,8 @@
 import { useContext, useState } from "react";
 import { CreateUser } from "../context/CreateUserCon";
+import { toast } from "react-toastify";
 
-export const Register = () => {
+export const Login = () => {
   const auth = useContext(CreateUser);
   const [inputUsername, setInputUsername] = useState("");
   const [inputPassword, setInputPassword] = useState("");
@@ -10,20 +11,33 @@ export const Register = () => {
     throw new Error("Login auth error");
   }
 
-  const { setUsername, setPassword, postUser } = auth;
+  const { setUsername, setPassword, setID } = auth;
 
-  const handleLogin = (e: React.FormEvent) => {
+  const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
-    setUsername(inputUsername);
-    setPassword(inputPassword);
-    postUser(inputUsername, inputPassword);
+    const response = await fetch("http://localhost:3000/app-users");
+    const users = await response.json();
+    const user = users.find(
+      (u: { username: string; password: string }) =>
+        u.username === inputUsername && u.password === inputPassword
+    );
+
+    if (user) {
+      toast.success("Login successful!");
+      setUsername(user.username);
+      setPassword(user.password);
+      setID(user.id);
+    } else {
+      toast.error("Invalid username or password");
+    }
+
     setInputUsername("");
     setInputPassword("");
   };
 
   return (
     <div className="login-box">
-      <h2>Register</h2>
+      <h2>Login</h2>
       <form
         action="submit"
         className="login-form"
@@ -43,7 +57,7 @@ export const Register = () => {
           value={inputPassword}
           onChange={(e) => setInputPassword(e.target.value)}
         />
-        <button>Register</button>
+        <button>Login</button>
       </form>
     </div>
   );
